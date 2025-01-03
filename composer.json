@@ -1,0 +1,23 @@
+{
+    "name": "vendor-name/apo-electronics-php-mpesa-integration",
+    "description": "Package Description",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Author Name",
+            "email": "patrickalunya@outlook.com",
+            "homepage": "https://www.patrickalunya.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "VendorName\\PackageName\\": "src/"
+        }
+    },
+    "version": "1.0.0"
+}
