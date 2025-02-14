@@ -3,11 +3,11 @@
         'name' => 'patri/apo-electronics-php-mpesa-integration',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '916d89961c05cbccaad5f8d0575788228a665463',
+        'reference' => '547b5c4f91a3e11ed4dc80df0ba06f6d2773a67b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'guzzlehttp/guzzle' => array(
@@ -40,7 +40,7 @@
         'patri/apo-electronics-php-mpesa-integration' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '916d89961c05cbccaad5f8d0575788228a665463',
+            'reference' => '547b5c4f91a3e11ed4dc80df0ba06f6d2773a67b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
