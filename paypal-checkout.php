@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 use PayPal\Api\Amount;
 use PayPal\Api\Payer;
@@ -16,6 +17,17 @@ $paypal = new \PayPal\Rest\ApiContext(
     new \PayPal\Auth\OAuthTokenCredential(
         'AYH6UECMvxqShf9rIjEchnKQX0yag_YJnAHMxdRiiB7iQco63mmZNatA7Ayvm6AWkMW3DVgqPtp7epwX',     // ClientID
         'EF74UjA33lYB5O79iEPWy1iEU0hifkKccPYS9gmBoBVa5moxCM7ng84bY4ny_hQoU9ebBc7tSMVlJYwH'  // ClientSecret
+    )
+);
+
+$paypal->setConfig(
+    array(
+        'mode' => 'sandbox',
+        'log.LogEnabled' => true,
+        'log.FileName' => 'PayPal.log',
+        'log.LogLevel' => 'DEBUG', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
+        'cache.enabled' => true,
+        'http.CURLOPT_SSL_VERIFYPEER' => false
     )
 );
 
@@ -62,13 +74,16 @@ if (isset($_GET['paymentId']) && isset($_GET['PayerID'])) {
     $execution->setPayerId($payerId);
 
     try {
-        $result = $payment->execute($execution, $paypal);
+        echo "Payment successful!";
+        ob_end_flush();
         echo "Payment successful!";
     } catch (Exception $ex) {
         die($ex);
     }
 }
 ?>
-<form method="post" action="paypal-checkout.php">
-    <button type="submit" name="pay">Pay with PayPal</button>
+<form method="post" action="paypal-checkout.php" style="text-align: center; margin-top: 20px;">
+    <button type="submit" name="pay" style="background-color: #0070ba; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">
+        Pay with PayPal
+    </button>
 </form>

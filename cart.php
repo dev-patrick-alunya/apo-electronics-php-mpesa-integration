@@ -1,8 +1,12 @@
 <?php
-require("common.php");
+session_start();
+$_SESSION['cart_total'] = 0;
+require("common.php"); // common.php file is included
 if (!isset($_SESSION['email'])) {
     header('location: index.php');
 }
+
+// Get the user_id from the session
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +32,8 @@ if (!isset($_SESSION['email'])) {
                     <?php
                     $sum = 0; $id = '';
                     $user_id = $_SESSION['user_id'];
-                    $query = "SELECT items.price AS Price, items.id As id, items.name AS Name FROM user_item JOIN items ON user_item.item_id = items.id WHERE user_item.user_id='$user_id' and `status`=1";
-                    $result = mysqli_query($con, $query) or die($mysqli_error($con));
+                    $query = "SELECT id, price, name FROM user_item WHERE user_id='$user_id' AND status='added to cart'";
+                    $result = mysqli_query($con, $query) or die(mysqli_error($con));
                     if (mysqli_num_rows($result) >= 1) {
                         ?>
                         <thead>
@@ -37,16 +41,17 @@ if (!isset($_SESSION['email'])) {
                                 <th>Item Number</th>
                                 <th>Item Name</th>
                                 <th>Price</th>
-                                <th></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             while ($row = mysqli_fetch_array($result)) {
-                                $sum += $row["Price"];
-                                $id .= $row["id"] . ", ";
-                                echo "<tr><td>" . "#" . $row["id"] . "</td><td>" . $row["Name"] . "</td><td>Ksh. " . $row["Price"] . "</td><td><a href='cart-remove.php?id={$row['id']}' class='remove_item_link'> Remove</a></td></tr>";
+                                $id .= $row["id"] . ",";
+                                $sum += $row["price"];
+                                echo "<tr><td>" . "#" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>Ksh. " . $row["price"] . "</td><td><a href='cart-remove.php?id={$row['id']}' class='remove_item_link'> Remove</a></td></tr>";
                             }
+                            $_SESSION['cart_total'] = $sum; // Store the total amount in session
                             $id = rtrim($id, ", ");
                             echo "<tr><td></td><td>Total</td><td>Ksh. " . $sum . "</td><td><a href='success.php?itemsid=" . $id . "' class='btn btn-primary'>Confirm Order</a></td></tr>";
                             ?>
@@ -59,8 +64,31 @@ if (!isset($_SESSION['email'])) {
                 </table>
                 
                 <!-- Add Checkout using M-Pesa button -->
-                <a href='mpesa-checkout.php' class='btn btn-success'>Checkout using M-Pesa</a>
+                <a href='mpesa-checkout.php' class='btn btn-success'>
+                    <span>
+              
+                    <img src="https://img.icons8.com/color/48/000000/mpesa.png" />
+            
+                    </span>
+                </a>
                 
+                <!-- Add Checkout using Paypal Button -->
+                <a href='paypal-checkout.php' class='btn btn-primary' style='background-color: #003087; border-color: #003087;'>
+                    <span>
+              
+                    <img src="https://img.icons8.com/color/48/000000/paypal.png" />
+            
+                    </span>
+                </a>
+
+                <!-- Add Checkout using Visa or Bank -->
+                <a href='visa-checkout.php' class='btn btn-success' style='background-color: #1a1f71; border-color: #1a1f71;'>
+                    <span>
+              
+                    <img src="https://img.icons8.com/color/48/000000/visa.png" />
+            
+                    </span>
+                </a>
             </div>
         </div>
     </div>

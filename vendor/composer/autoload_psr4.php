@@ -6,5 +6,12 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'VendorName\\PackageName\\' => array($baseDir . '/src'),
+    'Symfony\\Polyfill\\Intl\\Normalizer\\' => array($vendorDir . '/symfony/polyfill-intl-normalizer'),
+    'Symfony\\Polyfill\\Intl\\Idn\\' => array($vendorDir . '/symfony/polyfill-intl-idn'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Patri\\ApoElectronicsPhpMpesaIntegration\\' => array($baseDir . '/src'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
 );

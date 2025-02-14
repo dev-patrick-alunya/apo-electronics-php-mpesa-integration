@@ -78,20 +78,6 @@
               <img src="https://img.icons8.com/color/48/000000/mpesa.png" />
             </span>
         </div>
-          <div>
-          <form action="./paypal-checkout.php" method="POST">
-            <button type="submit" class="btn btn-primary">
-            <span>
-              <img src="https://img.icons8.com/color/48/000000/paypal.png" />
-            </span>
-            </button>
-          </form>
-          </div>
-          <div>
-            <span>
-              <img src="https://img.icons8.com/color/48/000000/visa.png" />
-            </span>
-          </div>
         </div>
         <div class="media mt-4 pl-2">
           <img src="./images/1200px-M-PESA_LOGO-01.svg.png" class="mr-3" height="75" />
@@ -106,11 +92,16 @@
             
                 <div class="col-12">
                   <label for="inputAddress" class="form-label">Amount</label>
-                  <input type="text" class="form-control" name="amount" placeholder="Enter Amount">
+                    <?php
+                    // Assuming you have a session started and cart total stored in session
+                    session_start();
+                    $totalAmount = isset($_SESSION['cart_total']) ? $_SESSION['cart_total'] : $price;
+                    ?>
+                    <input type="text" class="form-control" name="amount" value="<?php echo $totalAmount; ?>" readonly>
                 </div>
                 <div class="col-12">
                   <label for="inputAddress2" class="form-label" >Phone Number</label>
-                  <input type="text" class="form-control" name="phone"  placeholder="Enter Phone Number">
+                  <input type="text" class="form-control" name="phone"  placeholder="254723******" required>
                 </div>
              
                 <div class="col-12">

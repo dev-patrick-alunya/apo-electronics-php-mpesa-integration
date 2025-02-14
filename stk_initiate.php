@@ -8,6 +8,8 @@ if(isset($_POST['submit'])){
   $consumerKey = '8eNeDlkkSgaEXxAGskGbvYGGTPiGhW15QqAcZrR2sEkOumxB'; //Fill with your app Consumer Key
   $consumerSecret = 'WG0ARnqpFAxSWl0Y2gPePjPH6Cu2Ukb6QqqoA1lDJY6hiftVwg1oNd56FX4VC634'; // Fill with your app Secret
 
+
+
   # define the variales
   # provide the following details, this part is found on your test credentials on the developer account
   $BusinessShortCode = '174379';
@@ -26,7 +28,7 @@ if(isset($_POST['submit'])){
    $PartyA = $_POST['phone']; // This is your phone number, 
   $AccountReference = '2255';
   $TransactionDesc = 'Test Payment';
-  $Amount = $_POST['amount'];;
+  $Amount = $_POST['amount'];
  
   # Get the timestamp, format YYYYmmddhms -> 20181004151020
   $Timestamp = date('YmdHis');    
@@ -43,18 +45,25 @@ if(isset($_POST['submit'])){
   $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
   # callback url
-  $CallBackURL = ' https://ab92-102-135-170-151.ngrok-free.app/__/auth/handler/callback_url.php';  
+  $CallBackURL = 'https://ab92-102-135-170-151.ngrok-free.app/__/auth/handler/callback_url.php';  
 
-  $curl = curl_init($access_token_url);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($curl, CURLOPT_HEADER, FALSE);
-  curl_setopt($curl, CURLOPT_USERPWD, $consumerKey.':'.$consumerSecret);
-  $result = curl_exec($curl);
-  $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-  $result = json_decode($result);
+  # request access token
+  $ch = curl_init($access_token_url);
+  $credentials = base64_encode($consumerKey . ':' . $consumerSecret);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Basic ' . $credentials]);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+  $response = curl_exec($ch);
+  if (curl_errno($ch)) {
+    die('Curl error: ' . curl_error($ch));
+  }
+  curl_close($ch);
+  $result = json_decode($response);
+  if (!isset($result->access_token)) {
+    die('Error: Unable to retrieve access token. Response: ' . $response);
+  }
   $access_token = $result->access_token;
-  curl_close($curl);
 
   # header for stk push
   $stkheader = ['Content-Type:application/json','Authorization:Bearer '.$access_token];
@@ -80,7 +89,9 @@ if(isset($_POST['submit'])){
   );
 
   $data_string = json_encode($curl_post_data);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
   curl_setopt($curl, CURLOPT_POST, true);
   curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
   $curl_response = curl_exec($curl);

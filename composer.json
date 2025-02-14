@@ -1,23 +1,20 @@
 {
-    "name": "vendor-name/apo-electronics-php-mpesa-integration",
-    "description": "Package Description",
-    "type": "library",
-    "license": "MIT",
+    "name": "patri/apo-electronics-php-mpesa-integration",
+    "description": "apo electronics,paypal,mpesa and bank integrations",
+    "autoload": {
+        "psr-4": {
+            "Patri\\ApoElectronicsPhpMpesaIntegration\\": "src/"
+        }
+    },
     "authors": [
         {
-            "name": "Author Name",
-            "email": "patrickalunya@outlook.com",
-            "homepage": "https://www.patrickalunya.com",
-            "role": "Developer"
+            "name": "dev-patrick-alunya",
+            "email": "patrickalunya106@gmail.com"
         }
     ],
     "require": {
-        "php": ">=7.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "VendorName\\PackageName\\": "src/"
-        }
-    },
-    "version": "1.0.0"
+        "guzzlehttp/guzzle": "^6.5",
+        "paypal/rest-api-sdk-php": "^1.14"
+
+    }
 }

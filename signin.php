@@ -35,7 +35,7 @@ if (isset($_SESSION['email'])) {
                         </div>
                         <div class="panel-body">
                             <p class="text-warning"><i>Login to make a purchase</i><p>
-                            <form action="login_submit.php" method="POST">
+                            <form action="signin_submit.php" method="POST">
                                 <div class="form-group">
                                     <input type="email" class="form-control" placeholder="Email" autofocus="on" name="e-mail" required="true">
                                 </div>
