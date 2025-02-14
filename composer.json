@@ -1,6 +1,6 @@
 {
     "name": "patri/apo-electronics-php-mpesa-integration",
-    "description": "apo electronics,paypal,mpesa and bank integrations",
+    "description": "PHP FULL MPESA INTEGRATION",
     "autoload": {
         "psr-4": {
             "Patri\\ApoElectronicsPhpMpesaIntegration\\": "src/"
@@ -13,8 +13,6 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^6.5",
         "paypal/rest-api-sdk-php": "^1.14"
-
     }
 }
